@@ -65,8 +65,7 @@
         {
           "operation": "default",
           "warmup-iterations": 500,
-          "iterations": 100,
-          "target-throughput": 8
+          "iterations": 100
         },
 {%- if runtime_fields is defined %}
         { "operation": "term", "name": "term-from-source-using-grok",       "warmup-iterations": 50, "iterations": 10, "target-throughput": 0.01, "tags": ["term", "from-source",   "using-grok"] },
@@ -84,21 +83,19 @@
           "operation": "term",
           "warmup-iterations": 500,
           "iterations": 100,
-          "target-throughput": 50
+          "clients": {{bulk_indexing_clients | default(8)}}
         },
 {%- endif %}
         {
           "name": "terms_enum",
           "operation": "terms_enum",
           "warmup-iterations": 500,
-          "iterations": 100,
-          "target-throughput": 50
+          "iterations": 100
         },  
         {
           "operation": "range",
           "warmup-iterations": 100,
-          "iterations": 100,
-          "target-throughput": 1
+          "iterations": 100
         },
 {%- if runtime_fields is defined %}
         { "operation": "200s-in-range", "name": "200s-in-range-from-source-using-grok",       "warmup-iterations": 100, "iterations": 100, "target-throughput": 5.0, "tags": ["200s-in-range", "from-source",   "using-grok"] },
@@ -123,52 +120,45 @@
         {
           "operation": "200s-in-range",
           "warmup-iterations": 500,
-          "iterations": 100,
-          "target-throughput": 33
+          "iterations": 100
         },
         {
           "operation": "400s-in-range",
           "warmup-iterations": 500,
-          "iterations": 100,
-          "target-throughput": 50
+          "iterations": 100
         },
 {%- endif %}
         {
           "operation": "hourly_agg",
           "warmup-iterations": 100,
-          "iterations": 100,
-          "target-throughput": 0.2
+          "iterations": 100
         },
         {
           "operation": "scroll",
           "warmup-iterations": 100,
-          "iterations": 200,
+          "iterations": 100,
           "#COMMENT": "Throughput is considered per request. So we issue one scroll request per second which will retrieve 25 pages",
-          "target-throughput": 1
+          "target-throughput": 2
         },
         {
           "operation": "desc_sort_timestamp",
           "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 0.5
+          "iterations": 100
         },
         {
           "operation": "asc_sort_timestamp",
           "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 0.5
+          "iterations": 100
         },
         {
           "operation": "desc_sort_with_after_timestamp",
           "warmup-iterations": 10,
-          "iterations": 100,
-          "target-throughput": 0.5
+          "iterations": 100
         },
         {
           "operation": "asc_sort_with_after_timestamp",
           "warmup-iterations": 10,
-          "iterations": 100,
-          "target-throughput": 0.5
+          "iterations": 100
         },
         {
           "name": "force-merge-1-seg",
@@ -199,27 +189,23 @@
           "name": "desc-sort-timestamp-after-force-merge-1-seg",
           "operation": "desc_sort_timestamp",
           "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 2
+          "iterations": 100
         },
         {
           "name": "asc-sort-timestamp-after-force-merge-1-seg",
           "operation": "asc_sort_timestamp",
           "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 2
+          "iterations": 100
         },
         {
           "name": "desc-sort-with-after-timestamp-after-force-merge-1-seg",
           "operation": "desc_sort_with_after_timestamp",
           "warmup-iterations": 10,
-          "iterations": 100,
-          "target-throughput": 0.5
+          "iterations": 100
         },
         {
           "name": "asc-sort-with-after-timestamp-after-force-merge-1-seg",
           "operation": "asc_sort_with_after_timestamp",
           "warmup-iterations": 10,
-          "iterations": 100,
-          "target-throughput": 0.5
+          "iterations": 100
         }
